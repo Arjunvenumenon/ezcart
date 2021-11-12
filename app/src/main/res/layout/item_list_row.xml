@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:id="@+id/baseLayout"
+    android:background="@drawable/square_background"
+    app:cardElevation="0dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+
+        <ImageView
+            android:id="@+id/productImage"
+            android:layout_width="@dimen/item_list_image_view_size"
+            android:layout_height="@dimen/item_list_image_view_size"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/itemNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_list_margin"
+            android:layout_marginTop="@dimen/item_list_margin"
+            android:layout_toEndOf="@id/productImage"
+            android:textColor="@color/black"
+            android:textSize="@dimen/item_list_text_size"/>
+
+        <TextView
+            android:id="@+id/itemDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_list_margin"
+            android:layout_marginTop="@dimen/item_list_margin"
+            android:layout_toEndOf="@id/itemNameTextView"
+            android:textColor="@color/black"
+            android:textSize="@dimen/item_list_text_size"/>
+
+        <TextView
+            android:id="@+id/itemAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemNameTextView"
+            android:layout_marginStart="@dimen/item_list_margin"
+            android:layout_marginTop="@dimen/item_list_margin1"
+            android:layout_toEndOf="@id/productImage"
+            android:drawablePadding="2dp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/item_list_text_size" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

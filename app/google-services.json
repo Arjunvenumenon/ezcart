@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "485174870026",
+    "project_id": "ez-cart-c4645",
+    "storage_bucket": "ez-cart-c4645.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485174870026:android:66976144dd40796500dff3",
+        "android_client_info": {
+          "package_name": "com.example.ezcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "485174870026-648hsthamh2vjt435saockkotlut5vum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZjKUUQfq2pkrgEAc8EEDt5Mqd1jBiTco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "485174870026-648hsthamh2vjt435saockkotlut5vum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/grp1">
+
+        <item
+            android:id="@+id/viewCart"
+            android:title="@string/view_cart" />
+
+        <item
+            android:id="@+id/yourOrders"
+            android:title="@string/your_orders" />
+
+        <item
+            android:id="@+id/feedback"
+            android:title="@string/feedback"/>
+
+        <item
+            android:id="@+id/help"
+            android:title="@string/help" />
+
+        <item
+            android:id="@+id/logout"
+            android:title="@string/logout" />
+
+    </group>
+
+
+
+</menu>

@@ -1,0 +1,246 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+    id 'kotlin-allopen'
+    id 'jacoco'
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        csv.enabled = true
+    }
+
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      '**/data/models/*',
+                      '**/ComposeComponent**',
+                      '**/DebugButtonComponent**',
+                      '**/Color**',
+                      '**/Shape**',
+                      '**/abc**',
+                      '**/Theme**',
+                      '**/Type**',
+                      '**/Wewes**',
+    ]
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    getSourceDirectories().setFrom(files([mainSrc]))
+    getClassDirectories().setFrom(files([debugTree]))
+    getExecutionData().setFrom(
+            "$project.projectDir/jacoco.exec",
+            fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
+    ]))
+
+    doFirst {
+        new File("$buildDir/intermediates/classes/").eachFileRecurse { file ->
+            if (file.name.contains('$$')) {
+                file.renameTo(file.path.replace('$$', '$'))
+            }
+        }
+    }
+}
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.example.ezcart.testing.OpenClass'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.example.ezcart"
+        minSdk 21
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+        //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.ezcart.AppTestRunner"
+
+        buildConfigField "String","BASE_URL","\"https://demo9990262.mockable.io/\""
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\test\\res'
+            }
+        }
+    }
+
+    packagingOptions {
+        pickFirst 'META-INF/AL2.0'
+        pickFirst 'META-INF/LGPL2.1'
+    }
+
+    testOptions.unitTests {
+        returnDefaultValues = true
+        all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    def lifecycle_version = "2.3.1"
+    def arch_version = "2.1.0"
+    def room_version = "2.3.0"
+    def coroutines_version = "1.4.2"
+    def dagger_version = "2.33"
+    def retrofit_version = "2.9.0"
+    def Interceptor_version = "4.7.2"
+    def mackito_version = "2.11.0"
+    def fragment_version = "1.2.5"
+    def archTestVersion = '2.1.0'
+    def mockitoAndroid = '3.3.3'
+    def espressoVersion = '3.3.0'
+    def mockitoKotlinVersion = '2.2.0'
+    def androidxTestCoreVersion = '1.3.0'
+    def okhttpVersion = '4.9.0'
+    def junitVersion = '4.13.1'
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+
+    // Annotation processor
+    //kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+
+    //dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$Interceptor_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
+
+    //Navigation component
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.2'
+    implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.3.2'
+
+    //rx
+    implementation "io.reactivex.rxjava3:rxkotlin:3.0.1"
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
+    //circle indicator
+    implementation 'me.relex:circleindicator:2.1.6'
+
+    //eventBus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    testImplementation "org.mockito:mockito-inline:$mackito_version"
+    testImplementation 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
+    testImplementation 'org.mockito:mockito-core:2.28.2'
+    kaptTest "com.google.dagger:dagger-compiler:$dagger_version"
+
+    testImplementation "org.powermock:powermock-module-junit4:2.0.2"
+    testImplementation "org.powermock:powermock-api-mockito2:2.0.2"
+    testImplementation 'org.robolectric:robolectric:4.4'
+
+    debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
+    debugImplementation "androidx.test:core:$androidxTestCoreVersion"
+    debugImplementation "androidx.test:monitor:$androidxTestCoreVersion"
+
+
+    // unit test
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation "androidx.arch.core:core-testing:$arch_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation "androidx.test:rules:1.3.0"
+    androidTestImplementation "androidx.test:runner:1.3.0"
+
+    // Assertions
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
+    androidTestImplementation 'com.google.truth:truth:1.1'
+
+    androidTestImplementation "androidx.arch.core:core-testing:$archTestVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+
+    androidTestImplementation "org.mockito:mockito-android:$mockitoAndroid"
+    androidTestImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.2"
+
+    testImplementation 'junit:junit:4.+'
+    //androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+
+}

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.registration.RegistrationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/registration_margin_top1"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <EditText
+            android:id="@+id/editTextFirstName"
+            style="@style/TextInputDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/registration_land_edit_text_margin"
+            android:layout_marginTop="@dimen/registration_margin_top1"
+            android:layout_marginEnd="@dimen/registration_land_edit_text_margin"
+            android:ems="10"
+            android:hint="@string/first_name"
+            android:inputType="textPersonName"
+            android:maxLength="50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            android:autofillHints="name" />
+
+        <EditText
+            android:id="@+id/editTextLastName"
+            style="@style/TextInputDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/registration_margin_top"
+            android:layout_marginStart="@dimen/registration_land_edit_text_margin"
+            android:layout_marginEnd="@dimen/registration_land_edit_text_margin"
+            android:ems="10"
+            android:hint="@string/last_name"
+            android:inputType="textPersonName"
+            android:maxLength="20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
+            android:autofillHints="name" />
+
+        <EditText
+            android:id="@+id/editTextUserId"
+            style="@style/TextInputDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/registration_margin_top"
+            android:layout_marginStart="@dimen/registration_land_edit_text_margin"
+            android:layout_marginEnd="@dimen/registration_land_edit_text_margin"
+            android:ems="10"
+            android:hint="@string/user_id_hint"
+            android:inputType="number"
+            android:maxLength="20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextLastName"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            style="@style/TextInputDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/registration_margin_top"
+            android:layout_marginStart="@dimen/registration_land_edit_text_margin"
+            android:layout_marginEnd="@dimen/registration_land_edit_text_margin"
+            android:ems="10"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextUserId"
+            android:importantForAutofill="no" />
+
+        <EditText
+            android:id="@+id/editTextMobile"
+            style="@style/TextInputDefault"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/registration_margin_top"
+            android:layout_marginStart="@dimen/registration_land_edit_text_margin"
+            android:layout_marginEnd="@dimen/registration_land_edit_text_margin"
+            android:ems="10"
+            android:hint="@string/mobile"
+            android:inputType="phone"
+            android:maxLength="20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+            android:importantForAutofill="no" />
+
+
+        <Button
+            android:id="@+id/buttonRegister"
+            style="@style/ButtonPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/registration_margin_top1"
+            android:layout_marginBottom="@dimen/registration_margin_top1"
+            android:layout_marginStart="@dimen/registration_land_edit_text_margin"
+            android:layout_marginEnd="@dimen/registration_land_edit_text_margin"
+            android:text="@string/register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextMobile" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</ScrollView>
